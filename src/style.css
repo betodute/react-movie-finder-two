@@ -1,0 +1,19 @@
+#whole {
+  background-color: #F9E368;
+}
+
+#mainHeadline {
+  padding-top: 3em;
+  font-size: xx-large;
+  color: #1F81EF;
+  font-family: 'MuseoModerno', cursive;
+}
+
+#searchTermTitle {
+  height: 1em;
+  color: #D74A11 ;
+}
+
+#subRed {
+  color: #D74A11 ;
+}
