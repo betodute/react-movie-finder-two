@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import MovieFinder from './Home';
+import Home from './Home';
+import Movie from './Movie';
 import "./style.css";
 
 const NotFound = () => {
@@ -9,16 +10,19 @@ const NotFound = () => {
 
 const App = () => {
   return (
-    <Router>
-      <nav className="navbar navbar-expand-lg navbar-light">
-        <Link id="mainHeadline" className="navbar-brand ml-5" to="/">Movie Finder</Link>
+  <Router>
+    <Link to="/">
+      <nav>
+        <h3 id="mainHeadline">Movie Finder</h3>
       </nav>
-      <Routes>
-        <Route path="/" element={<MovieFinder/>} />
-        <Route component={NotFound} />
-      </Routes>
-    </Router>
+    </Link>
+    <Routes>
+      <Route path="/" element={<Home/>} />
+      <Route path="/movie/:id" element={<Movie/>} />
+      <Route element={NotFound} />
+    </Routes>  
+  </Router>    
   );
-}
+};
 
 export default App;

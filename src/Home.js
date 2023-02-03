@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { json, checkStatus } from './utils';
-import "./style.css";
 
 const Movie = (props) => {
   const {
@@ -21,8 +20,8 @@ const Movie = (props) => {
       </div>
       <div className="col-8 col-md-10 col-lg-11 mb-3">
         <Link to={`/movie/${imdbID}/`}>
-          <h4 id="searchTermTitle">{Title}</h4>
-          <p>{Type} | {Year}</p>
+          <h4>{Title}</h4>
+          <p id="subRed">{Type} | {Year}</p>
         </Link>
       </div>
     </div>
@@ -84,7 +83,7 @@ class MovieFinder extends React.Component {
               <input
                 type="text"
                 className="form-control mr-sm-2"
-                placeholder="movie title"
+                placeholder="movie"
                 value={searchTerm}
                 onChange={this.handleChange}
               />
