@@ -1,7 +1,7 @@
 {
   "name": "react-movie-finder-two",
   "version": "0.1.0",
-  "homepage": "https://betodute.github.io/react-movie-finder-two",
+  "homepage": "https://betodute.github.io/react-movie-finder-two/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
