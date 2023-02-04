@@ -21,7 +21,7 @@ const Movie = (props) => {
       <div className="col-8 col-md-10 col-lg-11 mb-3">
         <Link to={`/movie/${imdbID}/`}>
           <h4>{Title}</h4>
-          <p id="subRed">{Type} | {Year}</p>
+          <p className="sub-red">{Type} | {Year}</p>
         </Link>
       </div>
     </div>
@@ -77,6 +77,7 @@ class MovieFinder extends React.Component {
 
     return (
       <div className="container">
+        <h3 className="search-term-title"> {searchTerm} </h3>
         <div className="row">
           <div className="col-12">
             <form onSubmit={this.handleSubmit} className="form-inline my-4">

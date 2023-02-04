@@ -8,17 +8,18 @@ const NotFound = () => {
   return <h2>404 Not Found</h2>;
 }
 
+
 const App = () => {
   return (
   <Router>
     <Link to="/">
       <nav>
-        <h3 id="mainHeadline">Movie Finder</h3>
+        <h3 className="main-headline">Movie Finder</h3>
       </nav>
     </Link>
     <Routes>
       <Route path="/" element={<Home/>} />
-      <Route path="/movie/:id" element={<Movie/>} />
+      <Route path="/movie/:id" element={<Movie/>}/>
       <Route element={NotFound} />
     </Routes>  
   </Router>    
