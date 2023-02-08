@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link } from "react-router-dom";
 import { json, checkStatus } from './utils';
 
@@ -28,27 +28,19 @@ const Movie = (props) => {
   )
 }
 
-class MovieFinder extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchTerm: '',
-      results: [],
-      error: '',
-    };
+export const Home = (props) => {
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [results, setResults] = useState([]);
+  const [error, setError] = useState('');
+
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
   }
 
-  handleChange(event) {
-    this.setState({ searchTerm: event.target.value });
-  }
-
-  handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    let { searchTerm } = this.state;
-    searchTerm = searchTerm.trim();
+    setSearchTerm(searchTerm.trim());
     if (!searchTerm) {
       return;
     }
@@ -63,46 +55,40 @@ class MovieFinder extends React.Component {
 
         if (data.Response === 'True' && data.Search) {
           console.log(data);
-          this.setState({ results: data.Search, error: '' });
+          setResults(data.Search);
+          setError('');
         }
       })
       .catch((error) => {
-        this.setState({ error: error.message });
-        console.log(error);
+        setError(error.message);
       })
   }
 
-  render() {
-    const { searchTerm, results, error } = this.state;
-
-    return (
-      <div className="container">
-        <h3 className="search-term-title"> {searchTerm} </h3>
-        <div className="row">
-          <div className="col-12">
-            <form onSubmit={this.handleSubmit} className="form-inline my-4">
-              <input
-                type="text"
-                className="form-control mr-sm-2"
-                placeholder="movie"
-                value={searchTerm}
-                onChange={this.handleChange}
-              />
-              <button type="submit" className="btn btn-primary">Submit</button>
-            </form>
-            {(() => {
-              if (error) {
-                return error;
-              }
-              return results.map((movie) => {
-                return <Movie key={movie.imdbID} movie={movie} />;
-              })
-            })()}
-          </div>
+  return (
+    <div className="container">
+      <h3 className="search-term-title"> {searchTerm} </h3>
+      <div className="row">
+        <div className="col-12">
+          <form onSubmit={handleSubmit} className="form-inline my-4">
+            <input
+              type="text"
+              className="form-control mr-sm-2"
+              placeholder="movie"
+              value={searchTerm}
+              onChange={handleChange}
+            />
+            <button type="submit" className="btn btn-primary">Submit</button>
+          </form>
+          {(() => {
+            if (error) {
+              return error;
+            }
+            return results.map((movie) => {
+              return <Movie key={movie.imdbID} movie={movie} />;
+            })
+          })()}
         </div>
       </div>
-    )
-  }
-}
-
-export default MovieFinder;
+    </div>
+  )
+};

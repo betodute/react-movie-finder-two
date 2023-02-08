@@ -1,17 +1,17 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {useParams} from 'react-router-dom';
 import { json, checkStatus } from './utils';
 
-class Movie extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      movie: null,
-    }
-  }
+export const Movie = () => {
+
+  const [movie, setMovie] = useState(null);
+  const [error, setError] = useState('');
+  
+  let params = useParams(); 
    
-  componentDidMount () {
-    let movieId = window.location.pathname.slice(7, -1)
-    fetch(`https://www.omdbapi.com/?i=${movieId}&apikey=b7da8d63`)
+  useEffect(() => {
+
+    fetch(`https://www.omdbapi.com/?i=${params.movieId}&apikey=b7da8d63`)
       .then(checkStatus)
       .then(json)
       .then((data) => {
@@ -20,57 +20,55 @@ class Movie extends React.Component {
         }
 
         if (data.Response === 'True') {
-          console.log(data);
-          this.setState({ movie: data, error: '' });
+          setMovie(data);
+          setError('');
         }
       })
+
       .catch((error) => {
-        this.setState({ error: error.message });
-        console.log(error);
+        setError(error.message);
       })
+
+  }, [])
+
+  
+  if (!movie) {
+    return null;
   }
 
-  render() {
-    if (!this.state.movie) {
-      return null;
-    }
+  const {
+    Title,
+    Year,
+    Plot,
+    Director,
+    imdbRating,
+    Poster,
+  } = movie;
 
-    const {
-      Title,
-      Year,
-      Plot,
-      Director,
-      imdbRating,
-      Poster,
-    } = this.state.movie;
-
-    return (
-      <div className="container">
-        <div className="row pt-5">
-          <div className="col-6">
-            <h1 className="archivo-font">{Title}</h1>
-            <ul className="list-unstyled archivo-font">
-              <li>
-                <p>Year: {Year}</p>
-              </li>
-              <li>
-                <p>Director: {Director}</p>
-              </li>
-              <li>
-                <p>Plot: {Plot}</p>
-              </li>
-              <li>
-                <p>imdbRating: {imdbRating} / 10</p>
-              </li>
-            </ul>
-          </div>
-          <div className="col-6 mt-3">
-            <img src={Poster} className="img-fluid" />
-          </div>
+  return (
+    <div className="container">
+      <div className="row pt-5">
+        <div className="col-6">
+          <h1 className="archivo-font">{Title}</h1>
+          <ul className="list-unstyled archivo-font">
+            <li>
+              <p>Year: {Year}</p>
+            </li>
+            <li>
+              <p>Director: {Director}</p>
+            </li>
+            <li>
+              <p>Plot: {Plot}</p>
+            </li>
+            <li>
+              <p>imdbRating: {imdbRating} / 10</p>
+            </li>
+          </ul>
+        </div>
+        <div className="col-6 mt-3">
+          <img src={Poster} className="img-fluid" />
         </div>
       </div>
-    )
-  }
-}
-
-export default Movie;
+    </div>
+  )
+};
