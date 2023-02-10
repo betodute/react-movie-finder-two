@@ -11,7 +11,7 @@ const NotFound = () => {
 const App = () => {
 
   return (
-  <Router>
+  <Router forceRefresh={true}>
     <Link to="/">
       <nav>
         <h3 className="main-headline">Movie Finder</h3>
